@@ -1,0 +1,20 @@
+node_modules/
+.pnpm-store/
+dist/
+coverage/
+.design-kit/
+
+# design-sync tooling (claude.ai/design pipeline) — local-only, not published.
+.ds-sync/
+ds-bundle/
+.design-sync/
+.turbo/
+packages/ui/index.d.ts
+packages/ui/.ds-css-entry.css
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+.DS_Store
+.vscode/
+.idea/

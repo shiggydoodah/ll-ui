@@ -1,0 +1,69 @@
+{
+  "name": "carbon",
+  "defaultMode": "dark",
+  "palette": {
+    "coal": "#131416",
+    "graphite": "#1d1f23",
+    "silver": "#ececee",
+    "smoke": "#a8abb2",
+    "paper": "#f6f6f4",
+    "amber": "#f59e0b",
+    "ember": "#b45309",
+    "red": "#ef4444",
+    "green": "#22c55e",
+    "blue": "#3b82f6",
+    "purple": "#a78bfa",
+    "magenta": "#ec4899"
+  },
+  "modes": {
+    "dark": {
+      "background": "coal",
+      "foreground": "silver",
+      "accent": "amber",
+      "backgroundSubtle": "graphite",
+      "textSubtle": "smoke",
+      "overlay": "rgb(0 0 0 / 0.8)",
+      "tones": {
+        "red": { "base": "color-mix(in oklab, {red} 85%, {silver})" },
+        "green": { "base": "color-mix(in oklab, {green} 85%, {silver})" },
+        "amber": { "base": "amber" },
+        "blue": { "base": "color-mix(in oklab, {blue} 80%, {silver})" },
+        "purple": { "base": "purple" },
+        "magenta": { "base": "magenta" }
+      }
+    },
+    "light": {
+      "background": "paper",
+      "foreground": "coal",
+      "accent": "ember",
+      "tones": {
+        "red": { "base": "color-mix(in oklab, {red} 88%, {coal})" },
+        "green": { "base": "color-mix(in oklab, {green} 80%, {coal})" },
+        "amber": { "base": "ember" },
+        "blue": { "base": "blue" },
+        "purple": { "base": "color-mix(in oklab, {purple} 70%, {coal})" },
+        "magenta": { "base": "magenta" }
+      }
+    }
+  },
+  "fonts": {
+    "body": {
+      "family": "system-ui",
+      "fallbacks": ["-apple-system", "Segoe UI", "Roboto", "sans-serif"]
+    },
+    "display": { "alias": "body" },
+    "mono": {
+      "family": "ui-monospace",
+      "fallbacks": ["SFMono-Regular", "Menlo", "Consolas", "monospace"]
+    }
+  },
+  "radius": { "sm": "2px", "md": "3px", "lg": "6px" },
+  "shadows": {
+    "sm": "0 1px 0 0 rgb(0 0 0 / 0.35)",
+    "md": "0 6px 16px -6px rgb(0 0 0 / 0.45)",
+    "lg": "0 16px 40px -12px rgb(0 0 0 / 0.55)"
+  },
+  "border": { "width": "1px", "style": "solid" },
+  "motion": { "fast": "120ms", "slow": "240ms", "easing": "cubic-bezier(0.2, 0, 0, 1)" },
+  "display": { "case": "uppercase", "tracking": "0.08em" }
+}

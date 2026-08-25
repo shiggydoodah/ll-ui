@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# No step needs to write to the repo; keep the token read-only so a compromised
+# action or lifecycle script can't push, tag, or open releases.
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      # reads the pinned version from package.json "packageManager"
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4.3.0
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Format check
+        run: pnpm format:check
+
+      # lint + typecheck + tests + theme/CSS/catalog guards for @ll-ui/react,
+      # then lint + typecheck + tests + build for @ll-ui/lab
+      - name: Verify
+        run: pnpm verify
+
+      # The lab build regenerates routeTree.gen.ts in place; a dirty tree here
+      # means a generated file was committed stale. --intent-to-add stages new
+      # untracked output so `git diff` catches it too, not just edits to files
+      # that are already tracked.
+      - name: Generated files are current
+        run: |
+          git add --intent-to-add --all
+          git diff --exit-code

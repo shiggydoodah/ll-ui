@@ -1,0 +1,30 @@
+packages:
+  - 'apps/*'
+  - 'packages/*'
+
+allowBuilds:
+  # watcher ships prebuilt platform binaries; its postinstall build is a fallback
+  # we never hit (and kit/theme builds are one-shot, no watch mode).
+  '@parcel/watcher': false
+  esbuild: true
+
+overrides:
+  # react-slot 1.3.1/1.3.2 evaluate `React.createContext(mergeProps)` at module
+  # scope, which crashes React's `react-server` build and breaks Next RSC
+  # consumers of this package. 1.3.3 dropped it. Radix deps may transitively
+  # pull the broken versions, so force the floor here.
+  '@radix-ui/react-slot@>=1.3.1 <1.3.3': '>=1.3.3 <1.4'
+
+  # Keep Node's types on the same major we build and run on (.nvmrc / the root
+  # `engines.node`). Floats freely within 24.x; never crosses to 25+. Also
+  # catches @types/jsdom, which asks for `@types/node: *` and would otherwise
+  # pull a second, newer copy in and duplicate the Node globals TypeScript
+  # sees. Bump this major only when .nvmrc does.
+  '@types/node': '^24'
+
+  # React types track the React major we build against, and the `react ^19.0.0`
+  # peer range packages/ui publishes. Float within 19.x, never cross to 20.
+  # These two move in lockstep with `react`/`react-dom` — when those go to 20,
+  # bump these in the same commit or the types silently lag the runtime.
+  '@types/react': '^19'
+  '@types/react-dom': '^19'
